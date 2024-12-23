@@ -24,7 +24,7 @@ namespace Bookify.Domain.Abstractions
         {
             _domainEvents.Clear();
         }
-        protected void RaideDomanEvent(IDomainEvent domainEvent)
+        protected void RaiseDomainEvent(IDomainEvent domainEvent)
         {
             _domainEvents.Add(domainEvent);
         }

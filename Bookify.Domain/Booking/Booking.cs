@@ -71,11 +71,67 @@ namespace Bookify.Domain.Booking
                 BookingStatus.Reserved,
                 utcNow);
 
-            booking.RaideDomanEvent(new BookingReservedDomainEvent(booking.Id));
+            booking.RaiseDomainEvent(new BookingReservedDomainEvent(booking.Id));
 
             apartment.LastBookedOnUtc = utcNow;
 
             return booking;
+        }
+
+        public Result Confirm(DateTime utcNow)
+        {
+            if (Status != BookingStatus.Reserved)
+                return Result.Failure(BookingErrors.NotReserved);
+
+            Status = BookingStatus.Confirmed;
+            ConfirmedOnUtc = utcNow;
+
+            RaiseDomainEvent(new BookingConfirmedDomainEvent(Id));
+
+            return Result.Success();
+        }
+
+        public Result Reject(DateTime utcNow)
+        {
+            if (Status != BookingStatus.Reserved)
+                return Result.Failure(BookingErrors.NotReserved);
+
+            Status = BookingStatus.Rejected;
+            RejectedOnUtc = utcNow;
+
+            RaiseDomainEvent(new BookingRejectedDomainEvent(Id));
+
+            return Result.Success();
+        }
+
+        public Result Complete(DateTime utcNow)
+        {
+            if (Status != BookingStatus.Confirmed)
+                return Result.Failure(BookingErrors.NotConfirmed);
+
+            Status = BookingStatus.Completed;
+            CompletedOnUtc = utcNow;
+
+            RaiseDomainEvent(new BookingCompletedDomainEvent(Id));
+
+            return Result.Success();
+        }
+
+        public Result Cancel(DateTime utcNow)
+        {
+            if (Status != BookingStatus.Confirmed)
+                return Result.Failure(BookingErrors.NotConfirmed);
+
+            var currentDate = DateOnly.FromDateTime(utcNow);
+            if(currentDate > Duration.Start)
+                return Result.Failure(BookingErrors.AlreadyStarted);
+
+            Status = BookingStatus.Cancelled;
+            CancelledOnUtc = utcNow;
+
+            RaiseDomainEvent(new BookingCancelledDomainEvent(Id));
+
+            return Result.Success();
         }
     }
 }
