@@ -3,16 +3,16 @@
 layout: home
 
 hero:
-  name: ".Net"
+  name: "Bookify"
   text: "Alireza abassi"
   tagline: My great project tagline
   actions:
     - theme: brand
-      text: Markdown Examples
-      link: /markdown-examples
-    - theme: alt
-      text: API Examples
-      link: /api-examples
+      text: Get Started
+      link: /docs/domain-layer
+    # - theme: alt
+      # text: API Examples
+      # link: /api-examples
 
 features:
   - title: Feature A
