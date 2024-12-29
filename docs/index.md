@@ -4,8 +4,8 @@ layout: home
 
 hero:
   name: "Bookify"
-  text: "Alireza abassi"
-  tagline: My great project tagline
+  text: "Alireza Abasi"
+  tagline: A web application for booking location reservations<br>Started at September 17, 2024<br>Developed by C# | .NET Core 8
   actions:
     - theme: brand
       text: Get Started
@@ -13,13 +13,11 @@ hero:
     # - theme: alt
       # text: API Examples
       # link: /api-examples
-
 features:
-  - title: Feature A
+  - title: Authorization
     details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature B
+  - title: Biiiiiib
     details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
   - title: Feature C
     details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
 ---
-
