@@ -5,7 +5,7 @@ layout: home
 hero:
   name: "Bookify"
   text: "Alireza abassi"
-  tagline: My great project tagline <br> sdfsfd
+  tagline: <p>My great project tagline <br> sdfsfd</p>
   actions:
     - theme: brand
       text: Get Started
