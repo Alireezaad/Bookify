@@ -14,6 +14,7 @@ export default defineConfig({
     sidebar: [
       {
         text: "Domain Layer",
+        collapsed: true,
         items: [
           { text: "Overview", link: "/docs/domain-layer/index.md" },
           { text: "Abstractions",
@@ -54,6 +55,7 @@ export default defineConfig({
       },
       {
         text: "Application layer",
+        collapsed: true,
         items: [
           { text: "Get Started", link: "/docs/domain-layer/index.md" },
           { text: "Entities", link: "/docs/domain-layer/entities.md" },
