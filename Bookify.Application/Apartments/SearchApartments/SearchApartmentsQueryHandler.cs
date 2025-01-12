@@ -61,17 +61,17 @@ namespace Bookify.Application.Apartments.SearchApartments
 
             var apartments = await connection.QueryAsync<ApartmentResponse, AddressResponse, ApartmentResponse>(sql,
                 (apartment, address) =>
-            {
-                apartment.Address = address;
-                return apartment;
-            },
-            new
-            {
-                request.StartDate,
-                request.EndDate,
-                ActiveBookingStatuses
-            },
-            splitOn: "Country");
+                {
+                    apartment.Address = address;
+                    return apartment;
+                },
+                new
+                {
+                    request.StartDate,
+                    request.EndDate,
+                    ActiveBookingStatuses
+                },
+                splitOn: "Country");
 
             return apartments.ToList();
         }

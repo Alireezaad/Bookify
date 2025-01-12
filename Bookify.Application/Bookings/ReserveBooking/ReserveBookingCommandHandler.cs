@@ -52,7 +52,7 @@ namespace Bookify.Application.Bookings.ReserveBooking
 
             _bookingRepository.Add(booking);
 
-            await _unitOfWork.SaveChanges(cancellationToken);
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             return booking.Id;
 
