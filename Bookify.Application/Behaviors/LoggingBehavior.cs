@@ -7,36 +7,35 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Bookify.Application.Behaviors
+namespace Bookify.Application.Behaviors;
+
+public class LoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : IBaseCommand
 {
-    public class LoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : IBaseCommand
+    private readonly ILogger<TRequest> _logger;
+
+    public LoggingBehavior(ILogger<TRequest> logger)
     {
-        private readonly ILogger<TRequest> _logger;
+        _logger = logger;
+    }
 
-        public LoggingBehavior(ILogger<TRequest> logger)
+    public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
+    {
+        var name = request.GetType();
+
+        try
         {
-            _logger = logger;
+            _logger.LogInformation("Executing command {command}", name);
+
+            var result = await next();
+
+            _logger.LogInformation("Command {command} executed successfully", name);
+
+            return result;
         }
-
-        public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
+        catch (Exception ex)
         {
-            var name = request.GetType();
-
-            try
-            {
-                _logger.LogInformation("Executing command {command}", name);
-
-                var result = await next();
-
-                _logger.LogInformation("Command {command} executed successfully", name);
-
-                return result;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Command {command} processing failed", name);
-                throw;
-            }
+            _logger.LogError(ex, "Command {command} processing failed", name);
+            throw;
         }
     }
 }
