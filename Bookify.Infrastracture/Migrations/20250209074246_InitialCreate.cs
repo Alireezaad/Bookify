@@ -91,10 +91,60 @@ namespace Bookify.Infrastracture.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "reviews",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    booking_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    user_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    apartment_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    comment = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: false),
+                    rating = table.Column<int>(type: "integer", nullable: false),
+                    created_on_utc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_reviews", x => x.id);
+                    table.ForeignKey(
+                        name: "fk_reviews_apartments_apartment_id",
+                        column: x => x.apartment_id,
+                        principalTable: "apartments",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "fk_reviews_bookings_booking_id",
+                        column: x => x.booking_id,
+                        principalTable: "bookings",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "fk_reviews_users_user_id",
+                        column: x => x.user_id,
+                        principalTable: "users",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "ix_bookings_apartment_id",
                 table: "bookings",
                 column: "apartment_id");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_reviews_apartment_id",
+                table: "reviews",
+                column: "apartment_id");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_reviews_booking_id",
+                table: "reviews",
+                column: "booking_id");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_reviews_user_id",
+                table: "reviews",
+                column: "user_id");
 
             migrationBuilder.CreateIndex(
                 name: "ix_users_email",
@@ -106,6 +156,9 @@ namespace Bookify.Infrastracture.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "reviews");
+
             migrationBuilder.DropTable(
                 name: "bookings");
 

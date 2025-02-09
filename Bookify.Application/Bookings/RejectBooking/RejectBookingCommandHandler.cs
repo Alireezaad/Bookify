@@ -1,15 +1,22 @@
+using Bookify.Application.Abstractions.Clock;
 using Bookify.Application.Abstractions.Messaging;
 using Bookify.Domain.Abstractions;
 using Bookify.Domain.Booking;
 
-public sealed class RejectBookingCommandHandler : ICommandHandler<RejectBookingCommand>
+internal sealed class RejectBookingCommandHandler : ICommandHandler<RejectBookingCommand>
 {
 
     private readonly IBookingRepository _bookingRepository;
-    public RejectBookingCommandHandler(IBookingRepository bookingRepository)
+    private readonly IUnitOfWork _unitOfWork;
+    private readonly IDateTimeProvider _dateTimeProvider;
+    public RejectBookingCommandHandler(IBookingRepository bookingRepository, IUnitOfWork unitOfWork, IDateTimeProvider dateTimeProvider)
     {
         _bookingRepository = bookingRepository;
+        _unitOfWork = unitOfWork;
+        _dateTimeProvider = dateTimeProvider;
     }
+
+
 
 
     public async Task<Result> Handle(RejectBookingCommand request, CancellationToken cancellationToken)
@@ -20,10 +27,15 @@ public sealed class RejectBookingCommandHandler : ICommandHandler<RejectBookingC
             return Result.Failure(BookingErrors.NotFound);
         }
 
-        booking.Reject(DateTime.UtcNow);
-        await _bookingRepository.(booking, cancellationToken);
-        return Result.Success();
+        var result = booking.Reject(_dateTimeProvider.UtcNow);
+        if (result.IsFailure)
+        {
+            return result;
+        }
 
+
+        await _unitOfWork.SaveChangesAsync();
+        return Result.Success();
     }
 
 

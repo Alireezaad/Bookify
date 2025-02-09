@@ -34,12 +34,13 @@ public class Review : Entity
     public static Result<Review> Create(
         Booking.Booking booking,
         Comment comment,
-        Rating rating)
+        Rating rating,
+        DateTime utcNow)
 
     {
         if (booking.Status != BookingStatus.Completed)
         {
-            return Result.Failure<Review>(new Error("Review.BookingNotCompleted", "Cannot create review for an incomplete booking"));
+            return Result.Failure<Review>(ReviewError.NotEligible);
         }
         var review = new Review(
             Guid.NewGuid(),
@@ -48,9 +49,10 @@ public class Review : Entity
             booking.ApartmentId,
             comment,
             rating,
-            DateTime.UtcNow);
+            utcNow);
 
         review.RaiseDomainEvent(new ReviewCreatedDomainEvent(review.Id));
+
         return review;
     }
 }
