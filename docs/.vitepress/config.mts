@@ -17,27 +17,27 @@ export default defineConfig({
         collapsed: true,
         items: [
           { text: "Overview", link: "/docs/domain-layer/index.md" },
-          { text: "Abstractions",
+          { text: "Abstractions", collapsed: true,
             items:[
               {text: "Entity", link:"/docs/domain-layer/Abstractions/entity.md"},
               {text: "IDomainEvent", link:"/docs/domain-layer/Abstractions/IDomainEvent.md"},
               {text: "IUnitOfWork", link:"/docs/domain-layer/Abstractions/IUnitOfWork.md"},
             ]
            },
-          { text: "Apartment", link: "/docs/domain-layer/Apartment/apartment.md",
+          { text: "Apartment", link: "/docs/domain-layer/Apartment/apartment.md", collapsed: true,
                 items:[
                   { text: "ValueObjects", link:"/docs/domain-layer/Apartment/apartmentValueObjects.md"},
                   { text: "IApartmentRepository", link:"/docs/domain-layer/Apartment/iapartmentRepository.md"},
                 ]
                },
-          { text: "User", link: "/docs/domain-layer/User/user.md",
+          { text: "User", link: "/docs/domain-layer/User/user.md", collapsed: true,
                 items:[
                   {text: "ValueObjects", link:"/docs/domain-layer/User/userValueObjects.md"},
                   {text: "Events", link: "/docs/domain-layer/User/userEvents.md"},
                   {text: "IUserRepository", link: "/docs/domain-layer/User/iuserRepository.md"}
                 ]
           },
-          { text: "Booking", link: "/docs/domain-layer/Booking/booking.md",
+          { text: "Booking", link: "/docs/domain-layer/Booking/booking.md", collapsed: true,
             items:[
               {text: "ValueObjects", link:"/docs/domain-layer/Booking/bookingValueObjects.md"},
               {text: "Events", link: "/docs/domain-layer/Booking/bookingEvents.md"},
@@ -45,12 +45,13 @@ export default defineConfig({
               {text: "BookingErrors", link: "/docs/domain-layer/Booking/bookingErrors.md"},
             ]
           },
-          { text: "Shared",
+          { text: "Shared", collapsed: true,
             items:[
               {text: "Currency", link:"/docs/domain-layer/Shared/currency.md"},
               {text: "Money", link: "/docs/domain-layer/Shared/money.md"},
             ]
           }
+
         ],
       },
       {
