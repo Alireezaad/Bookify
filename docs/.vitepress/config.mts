@@ -4,13 +4,21 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   title: "Bookify",
   description: "Alireza Abasi",
+  head: [['link', { rel: 'icon', href: '/icon2.png' }]],
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
+    logo: '/icon2.png',
     nav: [
       { text: "Home", link: "/", },
-      { text: "Examples", link: "/markdown-examples" },
+      { text: 'Team', link: '/team' }, 
     ],
-
+    footer: {
+      message: 'Alireza Abasi - Released under the MIT License.',
+      copyright: 'Copyright © 2025-present Bookify Team'
+    },
+    search: {
+      provider: 'local' // or use 'algolia' for Algolia search
+    },
     sidebar: [
       {
         text: "Domain Layer",
@@ -147,21 +155,60 @@ export default defineConfig({
         text: "Infrastructure Layer",
         collapsed: true,
         items: [
-          { text: "Application DbContext", link: "/docs/infrastructure-layer/application-db-context.md" },
-          { text: "Email Service", link: "/docs/infrastructure-layer/email-service.md" },
+          { text: "Overview", link: "/docs/infrastructure-layer/index.md" },
+          { text: "ApplicationDbContext", link: "/docs/infrastructure-layer/ApplicationDbContext.md" },
+          { text: "Dependency Injection", link: "/docs/infrastructure-layer/DependencyInjection.md" },
+          { text: "Configurations", collapsed: true, items: [
+            { text: "ReviewsConfigurations", link: "/docs/infrastructure-layer/Configurations/ReviewsConfigurations.md" },
+            { text: "ApartmentConfiguration", link: "/docs/infrastructure-layer/Configurations/ApartmentConfiguration.md" },
+            { text: "UserConfiguration", link: "/docs/infrastructure-layer/Configurations/UserConfiguration.md" },
+            { text: "BookingConfiguration", link: "/docs/infrastructure-layer/Configurations/BookingConfiguration.md" },
+          ] },
+          { text: "Repositories", collapsed: true, items: [
+            { text: "Repository", link: "/docs/infrastructure-layer/Repositories/Repository.md" },
+            { text: "BookingRepository", link: "/docs/infrastructure-layer/Repositories/BookingRepository.md" },
+            { text: "ApartmentRepository", link: "/docs/infrastructure-layer/Repositories/ApartmentRepository.md" },
+            { text: "UserRepository", link: "/docs/infrastructure-layer/Repositories/UserRepository.md" },
+          ] },
+          { text: "Data", collapsed: true, items: [
+            { text: "DateOnlyTypeHandler", link: "/docs/infrastructure-layer/Data/DateOnlyTypeHandler.md" },
+            { text: "SqlConnectionFactory", link: "/docs/infrastructure-layer/Data/SqlConnectionFactory.md" },
+          ] },
+          { text: "Email", collapsed: true, items: [
+            { text: "EmailService", link: "/docs/infrastructure-layer/Email/EmailService.md" },
+          ] },
+          { text: "Clock", collapsed: true, items: [
+            { text: "DateTimeProvider", link: "/docs/infrastructure-layer/Clock/DateTimeProvider.md" },
+          ] },
         ],
       },
       {
         text: "API Layer",
         collapsed: true,
         items: [
-          { text: "Bookings Controller", link: "/docs/api-layer/bookings-controller.md" },
+          { text: "Overview", link: "/docs/api-layer/index.md" },
+          { text: "Program", link: "/docs/api-layer/Program.md" },
+          { text: "Controllers", collapsed: true, items: [
+            { text: "ApartmentsController", link: "/docs/api-layer/Controllers/ApartmentsController.md" },
+            { text: "BookingsController", link: "/docs/api-layer/Controllers/BookingsController.md" },
+            { text: "ReserveBookingRequest", link: "/docs/api-layer/Controllers/Bookings/ReserveBookingRequest.md" },
+          ] },
+          { text: "Extensions", collapsed: true, items: [
+            { text: "ApplicationBuilderExtensions", link: "/docs/api-layer/Extensions/ApplicationBuilderExtensions.md" },
+            { text: "SeedDataExtensions", link: "/docs/api-layer/Extensions/SeedDataExtensions.md" },
+          ] },
+          { text: "Middleware", collapsed: true, items: [
+            { text: "ExceptionHandlingMiddleware", link: "/docs/api-layer/Middleware/ExceptionHandlingMiddleware.md" },
+          ] },
         ],
       },
     ],
 
     socialLinks: [
       { icon: "github", link: "https://github.com/Alireezaad/Bookify" },
+      { icon: "telegram", link: "https://t.me/vortex22" },
+      { icon: "linkedin", link: "https://www.linkedin.com/in/alireza-abasi-7000000000000000000/" },
+      { icon: "whatsapp", link: "https://wa.me/989023007950" },
     ],
   },
 });
